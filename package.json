@@ -1,0 +1,42 @@
+{
+  "name": "react-kup",
+  "version": "0.1.0",
+  "description": "react-kup is a simple, non-intrusive alternative to jsx for coffeescript",
+  "keywords": ["react", "coffee", "coffeescript", "jsx", "markup", "html", "component"],
+  "homepage": "http://github.com/snd/react-kup",
+  "author": {
+    "name": "Maximilian Krüger",
+    "email": "kruemaxi@gmail.com",
+    "url": "http://github.com/snd"
+  },
+  "bugs": {
+    "url": "http://github.com/snd/react-kup/issues",
+    "email": "kruemaxi@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/snd/react-kup.git"
+  },
+  "licenses": {
+    "type": "MIT",
+    "url": "git://github.com/snd/react-kup/LICENSE"
+  },
+  "engines": {
+    "node": ">=0.8.5"
+  },
+  "dependencies": {
+    "react": "0.9.0"
+  },
+  "devDependencies": {
+    "nodeunit": "0.8.5"
+  },
+  "main": "src/react-kup",
+  "scripts": {
+    "prepublish": "coffee --bare --compile --output src src/*.coffee",
+    "postpublish": "rm src/*.js",
+    "pretest": "coffee --bare --compile --output src src/*.coffee && coffee --bare --compile --output test test/*.coffee",
+    "posttest": "rm src/*.js && rm test/*.js",
+    "clean": "rm src/*.js && rm test/*.js",
+    "test": "node_modules/nodeunit/bin/nodeunit test/*.js"
+  }
+}
