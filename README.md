@@ -43,4 +43,6 @@ component = new HelloMessage({name: 'John'})
 React.renderComponent component, mountNode
 ```
 
+[see tests for more examples](test/react-kup.coffee)
+
 ### license: MIT

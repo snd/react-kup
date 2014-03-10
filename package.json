@@ -28,7 +28,7 @@
     "react": "0.9.0"
   },
   "devDependencies": {
-    "nodeunit": "0.8.5"
+    "nodeunit": "0.8.6"
   },
   "main": "src/react-kup",
   "scripts": {

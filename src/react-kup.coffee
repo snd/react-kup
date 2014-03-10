@@ -1,5 +1,5 @@
-react = require 'react'
-DOM = react.DOM
+React = require 'react'
+DOM = React.DOM
 
 tagNames = """
   a abbr address area article aside audio b base bdi bdo big blockquote body br
@@ -12,32 +12,51 @@ tagNames = """
   title tr track u ul var video wbr circle g line path polyline rect svg
 """.split(/\s+/)
 
+isReactComponent = (object) ->
+  if not object or not object.type or not object.type.prototype
+    return false
+  prototype = object.type.prototype
+  ('function' is typeof prototype.mountComponentIntoNode) and
+  ('function' is typeof prototype.receiveComponent)
+
+isAttrs = (value) ->
+  'object' is typeof value and not isReactComponent(value) and not Array.isArray value
+
 ReactKupPrototype =
   text: (text) ->
     this.push text
-  push: (component) ->
-    this.contentStack[this.contentStack.length - 1].push component
+  push: (child) ->
+    this.childrenStack[this.childrenStack.length - 1].push child
+  children: (content) ->
+    if isReactComponent content
+      [content]
+    else if typeof content is 'function'
+      this.childrenStack.push []
+      content()
+      children = this.childrenStack.pop()
+      children
+    else if Array.isArray content
+      c = this.children.bind this
+      [].concat content.map c
+    else if content?
+      [content]
+    else
+      []
   component: (tagNameOrConstructor, attrsOrContent, optionalContent) ->
-    attrs = if typeof attrsOrContent isnt 'object' then {} else attrsOrContent
+    attrs = if isAttrs attrsOrContent then attrsOrContent else {}
 
-    content = if typeof attrsOrContent isnt 'object' then attrsOrContent else optionalContent
+    content =
+      if optionalContent? then optionalContent
+      else if not isAttrs attrsOrContent then attrsOrContent
 
-    contents =
-      if typeof content is 'function'
-        this.contentStack.push []
-        content()
-        this.contentStack.pop()
-      else if content?
-        [content]
-      else
-        []
+    children = this.children content
 
     component =
       switch typeof tagNameOrConstructor
         when 'string'
-          DOM[tagNameOrConstructor] attrs, contents...
+          DOM[tagNameOrConstructor] attrs, children...
         when 'function'
-          new tagNameOrConstructor attrs, contents...
+          new tagNameOrConstructor attrs, children...
         else
           throw new Error 'first argument to component must be a string or function'
 
@@ -50,8 +69,8 @@ for tagName in tagNames
 
 newReactKup = ->
   reactKup = Object.create ReactKupPrototype
-  reactKup.contentStack = []
-  reactKup.contentStack.push []
+  reactKup.childrenStack = []
+  reactKup.childrenStack.push []
   return reactKup
 
 module.exports = (cb) ->
@@ -59,7 +78,7 @@ module.exports = (cb) ->
 
   if cb?
     cb k
-    contentStackTop = k.contentStack[k.contentStack.length - 1]
-    return contentStackTop[0]
+    childrenStackTop = k.childrenStack[k.childrenStack.length - 1]
+    return childrenStackTop[0]
   else
     return k
