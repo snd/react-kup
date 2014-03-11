@@ -4,7 +4,7 @@
 
 **react-kup is a simple, non-intrusive alternative to jsx for coffeescript**
 
-it's like [kup](https://github.com/snd/kup) but constructs react dom components instead of html strings.
+[it's like **kup**but constructs react dom components instead of html strings](https://github.com/snd/kup)
 
 ### install
 
