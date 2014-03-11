@@ -36,8 +36,7 @@ ReactKupPrototype =
       children = this.childrenStack.pop()
       children
     else if Array.isArray content
-      c = this.children.bind this
-      [].concat content.map c
+      [].concat content.map this.children.bind this
     else if content?
       [content]
     else
