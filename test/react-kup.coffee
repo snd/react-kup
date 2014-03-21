@@ -1,7 +1,6 @@
 React = require 'react/addons'
-DOM = React.DOM
 
-reactKup = require '../src/react-kup'
+reactKup = require('../src/react-kup')(React)
 
 removeReactAttributes = (string) ->
   string.replace(/\ data-react[^=]*="[^"]*"/g, '')

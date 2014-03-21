@@ -1,6 +1,3 @@
-React = require 'react'
-DOM = React.DOM
-
 tagNames = """
   a abbr address area article aside audio b base bdi bdo big blockquote body br
   button canvas caption cite code col colgroup data datalist dd del details dfn
@@ -53,7 +50,7 @@ ReactKupPrototype =
     component =
       switch typeof tagNameOrConstructor
         when 'string'
-          DOM[tagNameOrConstructor] attrs, children...
+          this.react.DOM[tagNameOrConstructor] attrs, children...
         when 'function'
           new tagNameOrConstructor attrs, children...
         else
@@ -66,18 +63,20 @@ for tagName in tagNames
       ReactKupPrototype[tagName] = (attrs, content) ->
         this.component tagName, attrs, content
 
-newReactKup = ->
+newReactKup = (react) ->
   reactKup = Object.create ReactKupPrototype
+  reactKup.react = react
   reactKup.childrenStack = []
   reactKup.childrenStack.push []
   return reactKup
 
-module.exports = (cb) ->
-  k = newReactKup()
+module.exports = (react) ->
+  (cb) ->
+    k = newReactKup(react)
 
-  if cb?
-    cb k
-    childrenStackTop = k.childrenStack[k.childrenStack.length - 1]
-    return childrenStackTop[0]
-  else
-    return k
+    if cb?
+      cb k
+      childrenStackTop = k.childrenStack[k.childrenStack.length - 1]
+      return childrenStackTop[0]
+    else
+      return k

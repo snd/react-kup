@@ -29,7 +29,13 @@ npm install
 ### example
 
 ```coffeescript
-reactKup = require 'react-kup'
+# react-kup doesn't come with react.
+# require your favorite version ...
+react = require 'react'
+# ... and tell react kup to use it
+reactKup = require('react-kup')(react)
+# react-kup has been tested against react@0.10.0-rc1
+# which is recommended
 
 HelloMessage = React.createClass
   render: ->
