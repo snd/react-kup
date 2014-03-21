@@ -138,3 +138,41 @@ module.exports =
     """
 
     test.done()
+
+  'another complex react example': (test) ->
+
+    ComponentPublicPageContent = React.createClass
+      render: ->
+        that = this
+
+        reactKup (k) ->
+          k.div ->
+            k.h1 "#{that.props.page.title}"
+            k.div
+              className: "page-markdown"
+              dangerouslySetInnerHTML:
+                __html: "<b>unsafe</b>"
+
+    ComponentPublicPage = React.createClass
+      render: ->
+        that = this
+        reactKup (k) ->
+          k.div className: "row", ->
+            k.component ComponentPublicPageContent, {page: that.props.page}
+
+    component = new ComponentPublicPage
+      page:
+        title: 'faq'
+
+    test.ok componentMatchesMarkup component, """
+      <div class="row">
+        <div>
+          <h1>faq</h1>
+          <div class="page-markdown">
+            <b>unsafe</b>
+          </div>
+        </div>
+      </div>
+    """
+
+    test.done()
