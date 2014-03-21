@@ -17,7 +17,7 @@ npm install react-kup
 put this line in the dependencies section of your `package.json`:
 
 ```
-"react-kup": "0.1.0"
+"react-kup": "0.2.0"
 ```
 
 then run:
@@ -49,6 +49,6 @@ component = new HelloMessage({name: 'John'})
 React.renderComponent component, mountNode
 ```
 
-[see tests for more examples](test/react-kup.coffee)
+[see tests for many more examples](test/react-kup.coffee)
 
 ### license: MIT
