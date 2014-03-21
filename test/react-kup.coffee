@@ -13,7 +13,13 @@ removeLayout = (string) ->
   string.replace(/\n\s*/g, '')
 
 componentMatchesMarkup = (component, markup) ->
-  componentToString(component) is removeLayout(markup)
+  actual = componentToString(component)
+  expected = removeLayout(markup)
+
+  # console.log 'actual   =', actual
+  # console.log 'expected =', expected
+
+  actual is expected
 
 module.exports =
 
