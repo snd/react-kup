@@ -31,9 +31,9 @@ npm install
 ```coffeescript
 # react-kup doesn't come with react.
 # require your favorite version ...
-react = require 'react'
+React = require 'react'
 # ... and tell react kup to use it
-reactKup = require('react-kup')(react)
+reactKup = require('react-kup')(React)
 # react-kup has been tested against react@0.10.0-rc1
 # which is recommended
 
