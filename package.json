@@ -2,7 +2,7 @@
   "name": "react-kup",
   "version": "0.2.0",
   "description": "react-kup is a simple, non-intrusive alternative to jsx for coffeescript",
-  "keywords": ["react", "coffee", "coffeescript", "jsx", "markup", "html", "component"],
+  "keywords": ["react", "coffee", "coffeescript", "jsx", "markup", "html", "component", "clientside", "browser"],
   "homepage": "http://github.com/snd/react-kup",
   "author": {
     "name": "Maximilian Krüger",
