@@ -33,11 +33,11 @@
   },
   "main": "src/react-kup",
   "scripts": {
+    "compile": "coffee --bare --compile --output src src/*.coffee",
     "prepublish": "coffee --bare --compile --output src src/*.coffee",
-    "postpublish": "rm src/*.js",
     "pretest": "coffee --bare --compile --output src src/*.coffee && coffee --bare --compile --output test test/*.coffee",
-    "posttest": "rm src/*.js && rm test/*.js",
-    "clean": "rm src/*.js && rm test/*.js",
+    "posttest": "rm test/*.js",
+    "clean": "rm test/*.js",
     "test": "node_modules/nodeunit/bin/nodeunit test/*.js"
   }
 }
