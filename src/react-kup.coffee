@@ -87,4 +87,4 @@ do ->
   else if module?.exports?
     module.exports = newReactKup
   else
-    throw new Error 'either the `window` global or the `module.exports` global must be defined'
+    throw new Error 'either the `window` global or the `module.exports` global must be present'
