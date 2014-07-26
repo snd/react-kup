@@ -79,11 +79,11 @@ do ->
         return k
 
   ###################################################################################
-  # node or browser?
+  # node.js or browser?
 
-  if module?.exports?
-    # node!
+  if window?
+    window.newReactKup = newReactKup
+  else if module?.exports?
     module.exports = newReactKup
   else
-    # browser!
-    window.newReactKup = newReactKup
+    throw new Error 'either the `window` global or the `module.exports` global must be defined'

@@ -87,9 +87,11 @@ var __slice = [].slice;
       }
     };
   };
-  if ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) {
+  if (typeof window !== "undefined" && window !== null) {
+    return window.newReactKup = newReactKup;
+  } else if ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) {
     return module.exports = newReactKup;
   } else {
-    return window.newReactKup = newReactKup;
+    throw new Error('either the `window` global or the `module.exports` global must be defined');
   }
 })();
