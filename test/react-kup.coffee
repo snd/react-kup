@@ -1,19 +1,19 @@
 React = require 'react/addons'
 
-reactKup = require('../src/react-kup')(React)
+reactKup = require('../src/react-kup')
 
 removeReactAttributes = (string) ->
   string.replace(/\ data-react[^=]*="[^"]*"/g, '')
 
-componentToString = (component) ->
-  html = React.renderComponentToString component
+elementToString = (element) ->
+  html = React.renderToString element
   removeReactAttributes html
 
 removeLayout = (string) ->
   string.replace(/\n\s*/g, '')
 
-componentMatchesMarkup = (component, markup) ->
-  actual = componentToString(component)
+elementProducesMarkup = (element, markup) ->
+  actual = elementToString(element)
   expected = removeLayout(markup)
 
   # console.log 'actual   =', actual
@@ -23,27 +23,214 @@ componentMatchesMarkup = (component, markup) ->
 
 module.exports =
 
+  'build':
+
+    'tag': (test) ->
+      element = reactKup (k) ->
+        k.build 'div'
+      test.ok elementProducesMarkup element, """
+        <div></div>
+      """
+      test.done()
+
+    'tag + attrs': (test) ->
+      element = reactKup (k) ->
+        k.build 'div', {className: 'test'}
+      test.ok elementProducesMarkup element, """
+        <div class="test"></div>
+      """
+      test.done()
+
+    'tag + attrs': (test) ->
+      element = reactKup (k) ->
+        k.build 'div', {className: 'test'}
+      test.ok elementProducesMarkup element, """
+        <div class="test"></div>
+      """
+      test.done()
+
+    'tag + attrs + text': (test) ->
+      element = reactKup (k) ->
+        k.build 'div', {className: 'test'}, 'this is a test'
+      test.ok elementProducesMarkup element, """
+        <div class="test">this is a test</div>
+      """
+      test.done()
+
+    'tag + attrs + function': (test) ->
+      element = reactKup (k) ->
+        k.build 'div', {className: 'test'}, ->
+          k.build 'a', 'hey there'
+      test.ok elementProducesMarkup element, """
+        <div class="test"><a>hey there</a></div>
+      """
+      test.done()
+
+    'tag + attrs + element': (test) ->
+      div = reactKup (k) ->
+        k.div 'hey there'
+      element = reactKup (k) ->
+        k.build 'div', {className: 'test'}, div
+      test.ok elementProducesMarkup element, """
+        <div class="test"><div>hey there</div></div>
+      """
+      test.done()
+
+    'tagName + attrs + mixed contents': (test) ->
+      element = reactKup (k) ->
+        k.build 'div', {className: 'test'},
+          ->
+            k.build 'div', 'hey'
+          'this is a test'
+          reactKup (l) ->
+            l.build 'a', 'there'
+      test.ok elementProducesMarkup element, """
+        <div class="test">
+          <div>hey</div>
+          <span>this is a test</span>
+          <a>there</a>
+        </div>
+      """
+      test.done()
+
+    'existing element': (test) ->
+      div = reactKup (k) ->
+        k.div 'hey there'
+
+      element = reactKup (k) ->
+        k.build div
+      test.ok elementProducesMarkup element, """
+        <div>hey there</div>
+      """
+      test.done()
+
+    'existing element with wrapper': (test) ->
+      div = reactKup (k) ->
+        k.div 'hey there'
+
+      element = reactKup (k) ->
+        k.p ->
+          k.build div
+      test.ok elementProducesMarkup element, """
+        <p><div>hey there</div></p>
+      """
+      test.done()
+
+  'alternative API': (test) ->
+    k = reactKup()
+    k.build 'div', {className: 'test'}
+    test.ok elementProducesMarkup k.element(), """
+      <div class="test"></div>
+    """
+    test.done()
+
+  'fail':
+
+    'only one tag allowed on toplevel': (test) ->
+      reactKup (k) ->
+        k.p 'test'
+        try
+          k.p 'fail'
+        catch e
+          test.equal e.message, 'only one tag allowed on toplevel but you are trying to add a second one'
+          test.done()
+
+    'when build is given react element additional arguments are forbidden': (test) ->
+      div = reactKup (k) ->
+        k.div()
+
+      reactKup (k) ->
+        try
+          k.build div, {className: 'foo'}
+        catch e
+          test.equal e.message, 'first argument to .build() is already a react element. in this case additional arguments are not allowed.'
+          test.done()
+
+  'empty':
+
+    'returns null': (test) ->
+      test.equal null, reactKup (k) ->
+        test.done()
+
+    'produces noscript tag': (test) ->
+      Class = React.createClass
+        render: ->
+          reactKup (k) ->
+      element = React.createElement Class
+      test.ok elementProducesMarkup element, """
+        <noscript></noscript>
+      """
+      test.done()
+
+  'inner text content':
+
+    'one is not wrapped in span': (test) ->
+      Class = React.createClass
+        render: ->
+          reactKup (k) ->
+            k.div 'inner text'
+      element = React.createElement Class
+      test.ok elementProducesMarkup element, """
+        <div>inner text</div>
+      """
+      test.done()
+
+    'more than one is wrapped in span': (test) ->
+      Class = React.createClass
+        render: ->
+          reactKup (k) ->
+            k.div 'inner text', 'another inner text'
+      element = React.createElement Class
+      test.ok elementProducesMarkup element, """
+        <div>
+          <span>inner text</span>
+          <span>another inner text</span>
+        </div>
+      """
+      test.done()
+
+    'interspersed is wrapped in span': (test) ->
+      Class = React.createClass
+        render: ->
+          reactKup (k) ->
+            k.div(
+              -> k.span 'text in span'
+              'inner text'
+              -> k.br()
+              'another inner text'
+            )
+      element = React.createElement Class
+      test.ok elementProducesMarkup element, """
+        <div>
+          <span>text in span</span>
+          <span>inner text</span>
+          <br>
+          <span>another inner text</span>
+        </div>
+      """
+      test.done()
+
   'single div': (test) ->
-    component = reactKup (k) ->
+    element = reactKup (k) ->
       k.div "Hello world"
 
-    test.ok componentMatchesMarkup component, """
+    test.ok elementProducesMarkup element, """
       <div>Hello world</div>
     """
 
     test.done()
 
   'nested': (test) ->
-    component = reactKup (k) ->
+    element = reactKup (k) ->
       k.div {className: 'wrapper'}, ->
         k.h1 {id: 'heading'}, "Heading"
         k.p ->
-          k.text "hello"
+          k.span "hello"
           k.br()
-          k.text "world"
+          k.span "world"
         k.h2 "Heading"
 
-    test.ok componentMatchesMarkup component, """
+    test.ok elementProducesMarkup element, """
       <div class="wrapper">
         <h1 id="heading">Heading</h1>
         <p>
@@ -62,10 +249,10 @@ module.exports =
     createItem = (itemText) ->
       reactKup (k) ->
         k.li itemText
-    component = reactKup (k) ->
+    element = reactKup (k) ->
       k.ul items.map createItem
 
-    test.ok componentMatchesMarkup component, """
+    test.ok elementProducesMarkup element, """
       <ul>
         <li>Buy Milk</li>
         <li>Buy Sugar</li>
@@ -81,10 +268,10 @@ module.exports =
         reactKup (k) ->
           k.div "Hello #{that.props.name}"
 
-    component = new HelloMessage
+    element = React.createElement HelloMessage,
       name: 'John'
 
-    test.ok componentMatchesMarkup component, """
+    test.ok elementProducesMarkup element, """
       <div>Hello John</div>
     """
 
@@ -117,7 +304,7 @@ module.exports =
         reactKup (k) ->
           k.div ->
             k.h3 'TODO'
-            k.component TodoList,
+            k.build TodoList,
               items: that.state.items
             k.form {
               onSubmit: that.handleSubmit
@@ -127,9 +314,9 @@ module.exports =
                 value: that.state.text
               k.button "Add ##{that.state.items.length + 1}"
 
-    component = new TodoApp
+    element = React.createElement TodoApp
 
-    test.ok componentMatchesMarkup component, """
+    test.ok elementProducesMarkup element, """
       <div>
         <h3>TODO</h3>
         <ul>
@@ -164,13 +351,13 @@ module.exports =
         that = this
         reactKup (k) ->
           k.div className: "row", ->
-            k.component ComponentPublicPageContent, {page: that.props.page}
+            k.build ComponentPublicPageContent, {page: that.props.page}
 
-    component = new ComponentPublicPage
+    element = React.createElement ComponentPublicPage,
       page:
         title: 'faq'
 
-    test.ok componentMatchesMarkup component, """
+    test.ok elementProducesMarkup element, """
       <div class="row">
         <div>
           <h1>faq</h1>

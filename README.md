@@ -1,91 +1,106 @@
 # react-kup
 
-[![Build Status](https://travis-ci.org/snd/react-kup.png)](https://travis-ci.org/snd/react-kup)
+[![NPM Package](https://img.shields.io/npm/v/react-kup.svg?style=flat)](https://www.npmjs.org/package/react-kup)
+[![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
+[![Dependencies](https://david-dm.org/snd/react-kup.svg)](https://david-dm.org/snd/react-kup)
 
-**react-kup is a simple, non-intrusive alternative to [jsx](https://facebook.github.io/react/docs/jsx-in-depth.html) for coffeescript**
+> [react](http://facebook.github.io/react/)-[kup](https://github.com/snd/kup) is a simple, nonintrusive alternative to [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) for [coffeescript](http://coffeescript.org/)
 
-[it's like **kup** but constructs react dom components instead of html strings](https://github.com/snd/kup)
-
-react-kup works in [node.js](#nodejs) and the [browser](#browser)
-
-react-kup has been tested against `react@0.11.0` (recommended) and `react@0.10.0`
-
-## browser
-
-your development markup should look something like the following
-
-```html
-<html>
-  <body>
-    <div id="my-app"></div>
-    <!-- react-kup doesn't come with react. include the newest react: -->
-    <script type="text/javascript" src="http://fb.me/react-0.11.0.js"></script>
-    <!-- take src/react-kup.js from this repository and include it -->
-    <script type="text/javascript" src="react-kup.js"></script>
-    <!-- example.js is assumed to be compiled from example.coffee below -->
-    <script type="text/javascript" src="example.js"></script>
-    <!-- call init from example.coffee below -->
-    <script type="text/javascript">init();</script>
-  </body>
-</html>
-```
-
-[react-kup.js](src/react-kup.js) makes the global variable `newReactKup`
-available
-
-*its best to fetch react with [bower](http://bower.io/), [react-kup with npm](https://www.npmjs.org/package/react-kup) and then use
-a build system like [gulp](http://gulpjs.com/) to bring everything together*
-
-### `example.coffee` (assumed to be compiled to `example.js`)
+**0.4.0 introduced some breaking changes. [see changelog below !](#changelog)**
 
 ```coffeescript
-# react-kup doesn't come with react.
-# tell react-kup to use the version of react we included above.
-reactKup = newReactKup (React)
-
-HelloMessage = React.createClass
+TodoItem = React.createClass
   render: ->
-    that = this
-    reactKup (k) ->
+    # when called with a callback `reactKup` 
+    # calls the callback with `k` and
+    # returns result of all calls on `k`
+    reactKup (k) =>
+      if that.props.item.isDone
+        k.li {
+
+TodoList = React.createClass
+  render: ->
+    # when called without a callback `reactKup` returns a builder `k`
+    k = reactKup()
+
+    if @props.isHello
       k.div "Hello #{that.props.name}"
+    else
+      k.div "Goodbye #{that.props.name}"
 
-init = ->
-  mountNode = document.getElementById('my-app')
-  component = new HelloMessage({name: 'John'})
+    k.ul ->
+      for i in [1...5]
+        k.li i
 
-  React.renderComponent component, mountNode
+    k.build
+
+    # return result explicitely
+    return k.result()
+
 ```
 
-[see tests for more examples and advanced usage](test/react-kup.coffee)
+[see the full examples below](#examples)
 
-## node.js
+**easy:** use all javascript/coffeescript features naturally
+when building a react component's virtual-DOM.
+as opposed to
 
-### install
+flexible
+https://github.com/kalasjocke/react-coffee-elements
+
+**lightweight:** single file ([lib/react-kup.js](lib/react-kup.js)) with just under 100 lines.
+
+**nonintrusive:** [no mixins.]( [no compilation.](https://github.com/jsdf/coffee-react-transform) [no `this` magic.](https://github.com/mvc-works/coffee-react-dom)
+integration with react.
+
+**portable:** works with CommonJS (NodeJS), AMD or without any module system.
+
+**stable:** [extensive tests.](test/) and used in production.
+
+it uses the same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
+but builds up nested react elements instead of html strings.
+
+- works
+- no additional build step required
+- no mixin. though you could build one yourself.
 
 ```
 npm install react-kup
 ```
 
-**or**
+has all the methods of `React.DOM`
 
-put this line in the dependencies section of your `package.json`:
+### CommonJS (NodeJS)
 
-```
-"react-kup": "0.3.0"
+``` js
+var reactKup = require('react-kup');
 ```
 
-then run:
+### AMD
 
+``` js
+define('my-module', ['react-kup'], function(reactKup) {
+  // ...
+});
 ```
-npm install
+
+### browser
+
+when no module system is present including [lib/react-kup.js](lib/react-kup.js)
+sets the global `reactKup`:
+
+```html
+<script src="react.js" type="text/javascript"></script>
+<script src="react-kup.js" type="text/javascript"></script>
 ```
+
+*its best to fetch react with [bower](http://bower.io/), [react-kup with npm](https://www.npmjs.org/package/react-kup) and then use
+a build system like [gulp](http://gulpjs.com/) to bring everything together*
+
+## example
 
 ```coffeescript
-# react-kup doesn't come with react.
-# require your favorite version ...
-React = require 'react'
-# ... and tell react kup to use it
-reactKup = require('react-kup')(React)
+reactKup = require('react-kup')
 
 HelloMessage = React.createClass
   render: ->
@@ -99,6 +114,64 @@ React.renderComponentToString component
 # => <div>Hello John</div>
 ```
 
-[see tests for more examples and advanced usage](test/react-kup.coffee)
+### `example.coffee` (assumed to be compiled to `example.js`)
 
-### license: MIT
+```coffeescript
+HelloMessage = React.createClass
+  render: ->
+    that = this
+    reactKup (k) ->
+      k.div "Hello #{that.props.name}"
+
+init = ->
+  mountNode = document.getElementById('my-app')
+  component = new HelloMessage({name: 'John'})
+
+  React.renderComponent component, mountNode
+```
+
+```coffeescript
+HelloMessage = React.createClass
+  render: ->
+    that = this
+    k = reactKup()
+    k.div "Hello #{that.props.name}"
+    # throws
+    k.div k
+    k.element()
+    k.peek()
+
+init = ->
+  mountNode = document.getElementById('my-app')
+  component = new HelloMessage({name: 'John'})
+
+  React.renderComponent component, mountNode
+```
+
+## changelog
+
+### 0.4.0
+
+- `.component` method renamed to `.build`
+- the `.text` method now uses `React.DOM.text` which gets wrapped in a `span` tag.
+- added AMD support
+- removed deprecation warnings for react 0.12.2
+- react-kup now comes with a version of react (0.12.0) caused confusion
+- supports both react-classes and react-elements as arguments to `.build`
+- supports react elements as content
+
+## contribution
+
+**TL;DR: bugfixes, issues and discussion are always welcome.
+ask me before implementing new features.**
+
+i will happily merge pull requests that fix bugs with reasonable code.
+
+i will only merge pull requests that modify/add functionality
+if the changes align with my goals for this package
+and only if the changes are well written, documented and tested.
+
+**communicate:** write an issue to start a discussion
+before writing code that may or may not get merged.
+
+## [license: MIT](LICENSE)
