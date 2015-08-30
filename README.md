@@ -2,11 +2,16 @@
 
 [![NPM Package](https://img.shields.io/npm/v/react-kup.svg?style=flat)](https://www.npmjs.org/package/react-kup)
 [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/reactkup)](https://saucelabs.com/u/reactkup)
+[![coverage-92%](http://img.shields.io/badge/coverage-92%-brightgreen.svg?style=flat)](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
 [![Dependencies](https://david-dm.org/snd/react-kup.svg)](https://david-dm.org/snd/react-kup)
 
-> [react](http://facebook.github.io/react/)-[kup](https://github.com/snd/kup) is a simple, nonintrusive alternative to [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) for [coffeescript](http://coffeescript.org/)
+**[react](http://facebook.github.io/react/)-[kup](https://github.com/snd/kup) is a simple, nonintrusive alternative to [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) for [coffeescript](http://coffeescript.org/)**
 
-**0.4.0 introduced some breaking changes. [see changelog below !](#changelog)**
+**[the newest version 0.4 introduces breaking changes !](CHANGELOG.md#04)**  
+[see the changelog](CHANGELOG.md#04)
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
 
 ```coffeescript
 TodoItem = React.createClass
