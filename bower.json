@@ -1,0 +1,40 @@
+{
+  "name": "react-kup",
+  "homepage": "http://github.com/snd/react-kup",
+  "authors": [
+    "Maximilian Krüger <kruemaxi@googlemail.com>"
+  ],
+  "description": "react-kup is a simple, nonintrusive alternative to JSX for coffeescript",
+  "keywords": [
+    "react",
+    "coffee",
+    "coffeescript",
+    "jsx",
+    "alternative",
+    "markup",
+    "template",
+    "html",
+    "component",
+    "clientside",
+    "browser",
+    "amd",
+    "simple"
+  ],
+  "main": "lib/react-kup",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "dependencies": {
+    "react": "0.13.3"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
