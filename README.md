@@ -14,14 +14,14 @@
 - use all coffeescript features naturally when building a react component's virtual-DOM
 - supports Node.js, [AMD](http://requirejs.org/docs/whyamd.html) and browsers
 - [tiny with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
-- [huge test suite](test) with [92% test coverage](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
+- [huge test suite](test/react-kup.coffee) with [92% test coverage](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
 - tests pass in all relevant browsers  
   [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
 - used in production
 - npm package: `npm install react-kup`
 - bower package: `bower install react-kup`
 - no additional build step required
-- no mixin required. though you could easily build one if you prefer.
+- no react mixin
 - it uses the same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
   but builds up nested react elements instead of html strings.
 
@@ -41,90 +41,44 @@ bower install react-kup
 when used in the browser and [AMD](http://requirejs.org/docs/whyamd.html) is not available it sets the global variable `reactKup`.
 
 ```coffeescript
-TodoItem = React.createClass
-  render: ->
-    # when called with a callback `reactKup` 
-    # calls the callback with `k` and
-    # returns result of all calls on `k`
-    reactKup (k) =>
-      if that.props.item.isDone
-        k.li {
-
 TodoList = React.createClass
   render: ->
-    # when called without a callback `reactKup` returns a builder `k`
-    k = reactKup()
-
-    if @props.isHello
-      k.div "Hello #{that.props.name}"
-    else
-      k.div "Goodbye #{that.props.name}"
-
-    k.ul ->
-      for i in [1...5]
-        k.li i
-
-    k.build
-
-    # return result explicitely
-    return k.result()
-
-```
-
-[see the full examples below](#examples)
-
-has all the methods of `React.DOM`
-
-## example
-
-```coffeescript
-reactKup = require('react-kup')
-
-HelloMessage = React.createClass
-  render: ->
     that = this
+    createItem = (itemText) ->
+      reactKup (k) ->
+        k.li itemText
     reactKup (k) ->
-      k.div "Hello #{that.props.name}"
+      k.ul that.props.items.map createItem
 
-component = new HelloMessage({name: 'John'})
-
-React.renderComponentToString component
-# => <div>Hello John</div>
-```
-
-### `example.coffee` (assumed to be compiled to `example.js`)
-
-```coffeescript
-HelloMessage = React.createClass
+TodoApp = React.createClass
+  getInitialState: ->
+    items: ['Buy Milk', 'Buy Sugar']
+    text: 'Add #3'
+  onChange: (e) ->
+    this.setState({text: e.target.value})
+  handleSubmit: (e) ->
+    e.preventDefault()
+    nextItems = this.state.items.concat([this.state.text])
+    nextText = ''
+    this.setState({items: nextItems, text: nextText})
   render: ->
     that = this
+
     reactKup (k) ->
-      k.div "Hello #{that.props.name}"
-
-init = ->
-  mountNode = document.getElementById('my-app')
-  component = new HelloMessage({name: 'John'})
-
-  React.renderComponent component, mountNode
+      k.div ->
+        k.h3 'TODO'
+        k.build TodoList,
+          items: that.state.items
+        k.form {
+          onSubmit: that.handleSubmit
+        }, ->
+          k.input
+            onChange: that.onChange
+            value: that.state.text
+          k.button "Add ##{that.state.items.length + 1}"
 ```
 
-```coffeescript
-HelloMessage = React.createClass
-  render: ->
-    that = this
-    k = reactKup()
-    k.div "Hello #{that.props.name}"
-    # throws
-    k.div k
-    k.element()
-    k.peek()
-
-init = ->
-  mountNode = document.getElementById('my-app')
-  component = new HelloMessage({name: 'John'})
-
-  React.renderComponent component, mountNode
-```
+[look at the tests for additional examples](test/react-kup.coffee)
 
 ### [contributing](contributing.md)
 
