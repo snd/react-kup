@@ -8,10 +8,37 @@
 
 **[react](http://facebook.github.io/react/)-[kup](https://github.com/snd/kup) is a simple, nonintrusive alternative to [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) for [coffeescript](http://coffeescript.org/)**
 
-**[the newest version 0.4 introduces breaking changes !](CHANGELOG.md#04)**  
-[see the changelog](CHANGELOG.md#04)
+**[the newest version 0.5 introduces breaking changes !](CHANGELOG.md#05)**  
+[see the changelog](CHANGELOG.md#05)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
+- use all coffeescript features naturally when building a react component's virtual-DOM
+- supports Node.js, [AMD](http://requirejs.org/docs/whyamd.html) and browsers
+- [tiny with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
+- [huge test suite](test) with [92% test coverage](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
+- tests pass in all relevant browsers  
+  [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
+- used in production
+- npm package: `npm install react-kup`
+- bower package: `bower install react-kup`
+- no additional build step required
+- no mixin required. though you could easily build one if you prefer.
+- it uses the same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
+  but builds up nested react elements instead of html strings.
+
+```
+npm install react-kup
+```
+
+```
+bower install react-kup
+```
+
+``` javascript
+> var reactKup = require('react-kup');
+```
+
+[lib/react-kup.js](lib/react-kup.js) supports [AMD](http://requirejs.org/docs/whyamd.html).  
+when used in the browser and [AMD](http://requirejs.org/docs/whyamd.html) is not available it sets the global variable `reactKup`.
 
 ```coffeescript
 TodoItem = React.createClass
@@ -46,61 +73,7 @@ TodoList = React.createClass
 
 [see the full examples below](#examples)
 
-**easy:** use all javascript/coffeescript features naturally
-when building a react component's virtual-DOM.
-as opposed to
-
-flexible
-https://github.com/kalasjocke/react-coffee-elements
-
-**lightweight:** single file ([lib/react-kup.js](lib/react-kup.js)) with just under 100 lines.
-
-**nonintrusive:** [no mixins.]( [no compilation.](https://github.com/jsdf/coffee-react-transform) [no `this` magic.](https://github.com/mvc-works/coffee-react-dom)
-integration with react.
-
-**portable:** works with CommonJS (NodeJS), AMD or without any module system.
-
-**stable:** [extensive tests.](test/) and used in production.
-
-it uses the same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
-but builds up nested react elements instead of html strings.
-
-- works
-- no additional build step required
-- no mixin. though you could build one yourself.
-
-```
-npm install react-kup
-```
-
 has all the methods of `React.DOM`
-
-### CommonJS (NodeJS)
-
-``` js
-var reactKup = require('react-kup');
-```
-
-### AMD
-
-``` js
-define('my-module', ['react-kup'], function(reactKup) {
-  // ...
-});
-```
-
-### browser
-
-when no module system is present including [lib/react-kup.js](lib/react-kup.js)
-sets the global `reactKup`:
-
-```html
-<script src="react.js" type="text/javascript"></script>
-<script src="react-kup.js" type="text/javascript"></script>
-```
-
-*its best to fetch react with [bower](http://bower.io/), [react-kup with npm](https://www.npmjs.org/package/react-kup) and then use
-a build system like [gulp](http://gulpjs.com/) to bring everything together*
 
 ## example
 
@@ -152,18 +125,6 @@ init = ->
 
   React.renderComponent component, mountNode
 ```
-
-## changelog
-
-### 0.4.0
-
-- `.component` method renamed to `.build`
-- the `.text` method now uses `React.DOM.text` which gets wrapped in a `span` tag.
-- added AMD support
-- removed deprecation warnings for react 0.12.2
-- react-kup now comes with a version of react (0.12.0) caused confusion
-- supports both react-classes and react-elements as arguments to `.build`
-- supports react elements as content
 
 ### [contributing](contributing.md)
 
