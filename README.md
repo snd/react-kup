@@ -14,7 +14,7 @@
 - use all coffeescript features naturally when building a react component's virtual-DOM
 - supports Node.js, [AMD](http://requirejs.org/docs/whyamd.html) and browsers
 - [tiny with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
-- [huge test suite](test/react-kup.coffee) with [92% test coverage](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
+- [huge test suite](test/react-kup.coffee) with [92% coverage](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
 - tests pass in all relevant browsers  
   [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
 - used in production
