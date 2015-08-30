@@ -1,14 +1,11 @@
 ((root, factory) ->
-################################################################################
-# support AMD, commonjs modules and no modules
-
   # AMD
   if ('function' is typeof define) and define.amd?
     define(['react'], factory)
   # CommonJS
   else if exports?
     module.exports = factory(require('react'))
-  # no module system
+  # browser globals
   else
     unless root.React?
       throw new Error(
@@ -16,11 +13,7 @@
          make sure react.js is included before react-kup.js'
       )
     root.reactKup = factory(root.React)
-
 )(this, (React) ->
-################################################################################
-# factory that takes `React` and returns the `reactKup` function
-
   ReactKup = ->
     this.stack = [[]]
     return this
