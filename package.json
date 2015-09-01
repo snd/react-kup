@@ -42,6 +42,7 @@
     "react": "0.13.3"
   },
   "devDependencies": {
+    "codecov.io": "0.1.6",
     "coffee-script": "1.9.3",
     "tape": "4.2.0",
     "coffeetape": "1.0.1",
@@ -53,9 +54,10 @@
     "compile": "coffee --bare --compile --output lib/ src/",
     "prepublish": "npm run compile",
     "pretest": "npm run compile",
-    "test": "istanbul cover -x test coffeetape test/*",
-    "test-zuul-local": "zuul --local 8080 test/*",
-    "test-zuul": "zuul test/*"
+    "test": "coffeetape test/*",
+    "test-with-codecov": "istanbul cover coffeetape test/* && cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js",
+    "test-zuul": "zuul test/*",
+    "test-zuul-local": "zuul --local 8080 test/*"
   },
   "main": "lib/react-kup"
 }

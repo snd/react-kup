@@ -3,7 +3,7 @@
 [![NPM Package](https://img.shields.io/npm/v/react-kup.svg?style=flat)](https://www.npmjs.org/package/react-kup)
 [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
 [![Sauce Test Status](https://saucelabs.com/buildstatus/reactkup)](https://saucelabs.com/u/reactkup)
-[![coverage-92%](http://img.shields.io/badge/coverage-92%-brightgreen.svg?style=flat)](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
+[![codecov.io](http://codecov.io/github/snd/react-kup/coverage.svg?branch=master)](http://codecov.io/github/snd/react-kup?branch=master)
 [![Dependencies](https://david-dm.org/snd/react-kup.svg)](https://david-dm.org/snd/react-kup)
 
 **[react](http://facebook.github.io/react/)-[kup](https://github.com/snd/kup) is a simple, nonintrusive alternative to [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) for [coffeescript](http://coffeescript.org/)**
@@ -14,8 +14,9 @@
 - use all coffeescript features naturally when building a react component's virtual-DOM
 - supports Node.js, [AMD](http://requirejs.org/docs/whyamd.html) and browsers
 - [tiny with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
-- [huge test suite](test/react-kup.coffee) with [92% coverage](https://rawgit.com/snd/react-kup/master/coverage/lcov-report/lib/react-kup.js.html)
-  [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
+- [huge test suite](test/react-kup.coffee)
+  passing [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
+  with [![codecov.io](http://codecov.io/github/snd/react-kup/coverage.svg?branch=master)](http://codecov.io/github/snd/react-kup?branch=master)
 - tests pass in all relevant browsers  
   [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
 - used in production
