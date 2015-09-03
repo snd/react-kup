@@ -17,6 +17,7 @@
 - [huge test suite](test/react-kup.coffee)
   passing [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
   with [![codecov.io](http://codecov.io/github/snd/react-kup/coverage.svg?branch=master)](http://codecov.io/github/snd/react-kup?branch=master)
+  code coverage
 - tests pass in all relevant browsers  
   [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
 - used in production
