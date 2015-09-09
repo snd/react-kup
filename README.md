@@ -12,7 +12,7 @@
 [see the changelog](CHANGELOG.md#05)
 
 - use all coffeescript features naturally when building a react component's virtual-DOM in `render`
-- [tiny single file with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
+- [tiny single file with just under 100 lines of simple, readable, maintainable code](src/react-kup.coffee)
 - [huge test suite](test/react-kup.coffee)
   passing [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
   with [![codecov.io](http://codecov.io/github/snd/react-kup/coverage.svg?branch=master)](http://codecov.io/github/snd/react-kup?branch=master)
