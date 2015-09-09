@@ -42,7 +42,7 @@ bower install react-kup
 ```
 
 [lib/react-kup.js](lib/react-kup.js) supports [AMD](http://requirejs.org/docs/whyamd.html).  
-it sets the global variable `reactKup` when
+sets the global variable `reactKup` when
 neither CommonJS nor
 [AMD](http://requirejs.org/docs/whyamd.html) are available.
 
