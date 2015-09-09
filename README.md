@@ -11,21 +11,21 @@
 **[the newest version 0.5 introduces breaking changes !](CHANGELOG.md#05)**  
 [see the changelog](CHANGELOG.md#05)
 
-- use all coffeescript features naturally when building a react component's virtual-DOM
-- supports Node.js, [AMD](http://requirejs.org/docs/whyamd.html) and browsers
-- [tiny with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
+- use all coffeescript features naturally when building a react component's virtual-DOM in `render`
+- [tiny single file with just under 100 lines of simple, readable, maintainable code in a single file](src/react-kup.coffee)
 - [huge test suite](test/react-kup.coffee)
   passing [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
   with [![codecov.io](http://codecov.io/github/snd/react-kup/coverage.svg?branch=master)](http://codecov.io/github/snd/react-kup?branch=master)
   code coverage
-- tests pass in all relevant browsers  
+- continously tested in Node.js (0.12, **4.0**), io.js (2, 3) and all relevant browsers:
   [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
+- supports CommonJS, [AMD](http://requirejs.org/docs/whyamd.html) and browser globals
 - used in production
 - npm package: `npm install react-kup`
 - bower package: `bower install react-kup`
 - no additional build step required
 - no react mixin
-- it uses the same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
+- same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
   but builds up nested react elements instead of html strings.
 - supports all tags supported by react
 
