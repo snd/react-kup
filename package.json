@@ -1,6 +1,6 @@
 {
   "name": "react-kup",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "react-kup is a simple, nonintrusive alternative to JSX for coffeescript",
   "keywords": [
     "react",
