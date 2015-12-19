@@ -39,7 +39,7 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "react": "0.13.3"
+    "react": "0.14.3"
   },
   "devDependencies": {
     "codecov.io": "0.1.6",
@@ -48,7 +48,8 @@
     "coffeetape": "1.0.1",
     "istanbul": "0.3.19",
     "zuul": "3.4.0",
-    "coffeeify": "1.1.0"
+    "coffeeify": "1.1.0",
+    "react-dom": "0.14.3"
   },
   "scripts": {
     "compile": "coffee --bare --compile --output lib/ src/",
