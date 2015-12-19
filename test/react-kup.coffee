@@ -364,3 +364,31 @@ test 'another complex react example', (t) ->
   """
 
   t.end()
+
+test 'stateless functional component', (t) ->
+  helloMessage = (props) ->
+    reactKup (k) ->
+      k.div "Hello #{props.name}"
+
+  element = React.createElement helloMessage,
+    name: 'John'
+
+  t.ok elementProducesMarkup element, """
+    <div>Hello John</div>
+  """
+
+  t.end()
+
+test 'stateless functional component with implicit return', (t) ->
+  helloMessage = ({name}) ->
+    reactKup (k) ->
+      k.div "Hello #{name}"
+
+  element = React.createElement helloMessage,
+    name: 'John'
+
+  t.ok elementProducesMarkup element, """
+    <div>Hello John</div>
+  """
+
+  t.end()
