@@ -1,5 +1,6 @@
 test = require 'tape'
-React = require 'react/addons'
+React = require 'react'
+ReactDOMServer = require 'react-dom/server'
 
 reactKup = require('../lib/react-kup')
 
@@ -7,7 +8,7 @@ removeReactAttributes = (string) ->
   string.replace(/\ data-react[^=]*="[^"]*"/g, '')
 
 elementToString = (element) ->
-  html = React.renderToString element
+  html = ReactDOMServer.renderToString element
   removeReactAttributes html
 
 removeLayout = (string) ->
@@ -109,14 +110,14 @@ test 'build', (t) ->
     t.end()
 
   t.test 'existing element with wrapper', (t) ->
-    div = reactKup (k) ->
-      k.div 'hey there'
+    span = reactKup (k) ->
+      k.span 'hey there'
 
     element = reactKup (k) ->
       k.p ->
-        k.build div
+        k.build span
     t.ok elementProducesMarkup element, """
-      <p><div>hey there</div></p>
+      <p><span>hey there</span></p>
     """
     t.end()
 
@@ -208,7 +209,7 @@ test 'inner text content', (t) ->
       <div>
         <span>text in span</span>
         <span>inner text</span>
-        <br>
+        <br/>
         <span>another inner text</span>
       </div>
     """
@@ -229,7 +230,7 @@ test 'nested', (t) ->
       <h1 id="heading">Heading</h1>
       <p>
         <span>hello</span>
-        <br>
+        <br/>
         <span>world</span>
       </p>
       <h2>Heading</h2>
@@ -318,7 +319,7 @@ test 'complex react example', (t) ->
         <li>Buy Sugar</li>
       </ul>
       <form>
-        <input value="Add #3">
+        <input value="Add #3"/>
         <button>Add #3</button>
       </form>
     </div>
@@ -360,6 +361,34 @@ test 'another complex react example', (t) ->
         </div>
       </div>
     </div>
+  """
+
+  t.end()
+
+test 'stateless functional component', (t) ->
+  helloMessage = (props) ->
+    reactKup (k) ->
+      k.div "Hello #{props.name}"
+
+  element = React.createElement helloMessage,
+    name: 'John'
+
+  t.ok elementProducesMarkup element, """
+    <div>Hello John</div>
+  """
+
+  t.end()
+
+test 'stateless functional component with implicit return', (t) ->
+  helloMessage = ({name}) ->
+    reactKup (k) ->
+      k.div "Hello #{name}"
+
+  element = React.createElement helloMessage,
+    name: 'John'
+
+  t.ok elementProducesMarkup element, """
+    <div>Hello John</div>
   """
 
   t.end()
