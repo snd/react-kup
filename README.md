@@ -8,16 +8,13 @@
 
 **[react](http://facebook.github.io/react/)-[kup](https://github.com/snd/kup) is a simple, nonintrusive alternative to [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) for [coffeescript](http://coffeescript.org/)**
 
-**[the newest version 0.5 introduces breaking changes !](CHANGELOG.md#05)**  
-[see the changelog](CHANGELOG.md#05)
-
-- use all coffeescript features naturally when building a react component's virtual-DOM in `render`
+- use all coffeescript features naturally when building a react component's virtual-DOM
 - [tiny single file with just under 100 lines of simple, readable, maintainable code](src/react-kup.coffee)
 - [huge test suite](test/react-kup.coffee)
   passing [![Build Status](https://travis-ci.org/snd/react-kup.svg?branch=master)](https://travis-ci.org/snd/react-kup/branches)
   with [![codecov.io](http://codecov.io/github/snd/react-kup/coverage.svg?branch=master)](http://codecov.io/github/snd/react-kup?branch=master)
   code coverage
-- continously tested in Node.js (0.12, **4.0**), io.js (2, 3) and all relevant browsers:
+- continuously tested in Node.js (0.12, 4 and 5) and all relevant browsers:
   [![Sauce Test Status](https://saucelabs.com/browser-matrix/reactkup.svg)](https://saucelabs.com/u/reactkup)
 - supports CommonJS, [AMD](http://requirejs.org/docs/whyamd.html) and browser globals
 - used in production
@@ -88,18 +85,6 @@ TodoApp = React.createClass
 
 ### [contributing](contributing.md)
 
-**bugfixes, issues and discussion are always welcome.  
-kindly [ask](https://github.com/snd/url-pattern/issues/new) before implementing new features.**
+### [changelog](CHANGELOG.md)
 
-i will happily merge pull requests that fix bugs with reasonable code.
-
-i will only merge pull requests that modify/add functionality
-if the changes align with my goals for this package,
-are well written, documented and tested.
-
-**communicate !**  
-[write an issue](https://github.com/snd/url-pattern/issues/new) to start a discussion before writing code that may or may not get merged.
-
-[This project adheres to the Contributor Covenant 1.2](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to kruemaxi@gmail.com.
-
-## [license: MIT](LICENSE)
+### [license: MIT](LICENSE)
