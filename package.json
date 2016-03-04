@@ -31,10 +31,7 @@
     "type": "git",
     "url": "git://github.com/snd/react-kup.git"
   },
-  "licenses": {
-    "type": "MIT",
-    "url": "git://github.com/snd/react-kup/LICENSE"
-  },
+  "license": "MIT",
   "engines": {
     "node": ">=0.10.0"
   },
