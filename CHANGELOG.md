@@ -1,5 +1,11 @@
 ### changelog
 
+#### 0.6
+
+- now requires react and react-dom as peer dependencies
+- now requires react and react-dom `~15.0.0`
+  - see https://github.com/snd/react-kup/pull/6
+
 #### 0.5
 
 - `.component` method renamed to `.build`
