@@ -42,12 +42,11 @@
   "devDependencies": {
     "codecov.io": "0.1.6",
     "coffee-script": "1.10.0",
-    "tape": "4.5.0",
+    "tape": "4.5.1",
     "coffeetape": "1.0.1",
-    "istanbul": "0.4.2",
-    "zuul": "3.9.0",
-    "coffeeify": "2.0.1",
-    "react-dom": "~15.0.0"
+    "istanbul": "0.4.3",
+    "zuul": "3.10.1",
+    "coffeeify": "2.0.1"
   },
   "scripts": {
     "compile": "coffee --bare --compile --output lib/ src/",
