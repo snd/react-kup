@@ -25,6 +25,7 @@
 - same concept as [**kup**](https://github.com/snd/kup) (kup is an html builder for nodejs)
   but builds up nested react elements instead of html strings.
 - supports all tags supported by react
+- [changelog](CHANGELOG.md)
 
 ```
 npm install react-kup
