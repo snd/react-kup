@@ -92,7 +92,7 @@ test 'build', (t) ->
     t.ok elementProducesMarkup element, """
       <div class="t">
         <div>hey</div>
-        <span>this is a t</span>
+        <!-- react-text: 3 -->this is a t<!-- /react-text -->
         <a>there</a>
       </div>
     """
@@ -157,13 +157,13 @@ test 'empty', (t) ->
     t.equal null, reactKup (k) ->
       t.end()
 
-  t.test 'produces noscript tag', (t) ->
+  t.test 'produces empty comment', (t) ->
     Class = React.createClass
       render: ->
         reactKup (k) ->
     element = React.createElement Class
     t.ok elementProducesMarkup element, """
-      <noscript></noscript>
+      <!-- react-empty: 1 -->
     """
     t.end()
 
@@ -180,7 +180,7 @@ test 'inner text content', (t) ->
     """
     t.end()
 
-  t.test 'more than one is wrapped in span', (t) ->
+  t.test 'more than one are wrapped in comments', (t) ->
     Class = React.createClass
       render: ->
         reactKup (k) ->
@@ -188,13 +188,13 @@ test 'inner text content', (t) ->
     element = React.createElement Class
     t.ok elementProducesMarkup element, """
       <div>
-        <span>inner text</span>
-        <span>another inner text</span>
+        <!-- react-text: 2 -->inner text<!-- /react-text -->
+        <!-- react-text: 3 -->another inner text<!-- /react-text -->
       </div>
     """
     t.end()
 
-  t.test 'interspersed is wrapped in span', (t) ->
+  t.test 'interspersed is wrapped in comment', (t) ->
     Class = React.createClass
       render: ->
         reactKup (k) ->
@@ -208,9 +208,9 @@ test 'inner text content', (t) ->
     t.ok elementProducesMarkup element, """
       <div>
         <span>text in span</span>
-        <span>inner text</span>
+        <!-- react-text: 3 -->inner text<!-- /react-text -->
         <br/>
-        <span>another inner text</span>
+        <!-- react-text: 5 -->another inner text<!-- /react-text -->
       </div>
     """
     t.end()
