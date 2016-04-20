@@ -4,7 +4,7 @@ node_js:
   - "iojs-3"
   - "4"
   - "5"
-script: npm run $NPM_COMMAND
+script: '[[ "${TRAVIS_PULL_REQUEST}" != "false" && "${NPM_COMMAND}" == "test-in-browsers" ]] || npm run $NPM_COMMAND'
 sudo: false
 env:
   global:
